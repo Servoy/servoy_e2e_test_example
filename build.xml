@@ -8,6 +8,8 @@
 
 	<target name="export_war_solutions" depends="load_properties, clean">
 		<export-solutions-as-war solutionNames="${solutions_to_export_as_war_tests}" outputDir="${servoy.test.target-exports.war}"/>
+    <loadfile property="eclipselog" srcFile=".metadata/.log"/>
+    <echo message="${eclipselog}" />
   </target>
 
 
