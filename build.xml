@@ -67,7 +67,7 @@
             	<arg value="${servoy_install.app_server_dir}" />
             	<arg value="-dbi" />
         		  <arg value="-pluginLocations" />
-        	    <arg value="${servoy_install.developer}/plugins/" />
+        	    <arg value="./plugins/" />
               <arg value="-p" />
               <arg value="${servoy_test_properties}" />
             	<!-- add here any of the optional arguments supported by the exporter; see 'export -help' for more info; for example: -->
