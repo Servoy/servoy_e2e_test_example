@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The contents of this file will be loaded for each web application -->
+<!-- userHttpOnly ensure the session tracking cookie (JSESSIONID) is not accessible
+     via javascript.  This helps mitigate the affect of XSS attacks.   -->
+<Context useHttpOnly="true">
+
+</Context>

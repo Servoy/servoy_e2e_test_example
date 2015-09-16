@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+
+<project name="test_runner" default="export_war_solutions" basedir=".">
+
+  <target name="load_properties">
+	   <property file="test_runner.properties"/>
+  </target>
+
+	<target name="export_war_solutions" depends="load_properties, clean">
+		<export-solutions-as-war solutionNames="${solutions_to_export_as_war_tests}" outputDir="${servoy.test.target-exports.war}"/>
+  </target>
+
+
+
+
+    <target name="prepare_export_log">
+  		<move file="servoy_log.txt" tofile="${log.dir}/workspace_exporter_app_server_log.txt" failonerror="false"/>
+  		<move file="${test.workspace.dir}/.metadata/.log" tofile="${log.dir}/workspace_exporter_workspace_log.txt" failonerror="false"/>
+    </target>
+
+
+    <target name="prepare_test_run_log">
+		<move file="${servoy_install.app_server_dir}/servoy_log.txt" tofile="${log.dir}/import_test_client_log.txt" failonerror="false"/>
+    </target>
+
+
+    <macrodef name="export-solutions-as-war">
+        <attribute name="solutionNames"/>
+        <attribute name="outputDir"/>
+    	<sequential>
+	        <!-- store path to newest Eclipse launcher JAR in path id 'newest.equinox.launcher.path.id' -->
+        	<!-- and turn the path into a property -->
+        	<latest_jar pathName="equinox.launcher.jar.location" dir="${servoy_install.developer}/plugins" includes="**/org.eclipse.equinox.launcher_*.jar"/>
+
+        	<!-- now we are ready to start the workspace exporter -->
+    		<echo level="info" message="Using application_server dir: ${servoy_install.app_server_dir}"/>
+    		<echo level="info" message="Using developer          dir: ${servoy_install.developer}"/>
+        	<echo level="info" message="Using equinox launcher   jar: ${equinox.launcher.jar.location_property}" />
+    		<echo level="info" message="Using pluginLocations   dir: ${servoy_install.developer}/plugins/" />
+           <!--  <echo level="info" message="Using workspace   dir: ${test.workspace.dir}" /> -->
+            <echo level="info" message="Using workspace   dir: ${test.workspace.dir}" />
+        	<java   classname="org.eclipse.equinox.launcher.Main"
+                	classpathref="equinox.launcher.jar.location"
+                	failonerror="true"
+                	fork="true">
+            	<jvmarg value="-Xms40m" />
+            	<jvmarg value="-Xmx512m" />
+            	<jvmarg value="-XX:MaxPermSize=256M" />
+            	<jvmarg value="-Dosgi.configuration.cascaded=false" />
+            	<jvmarg value="-Dservoy.application_server.dir=${servoy_install.app_server_dir}" />
+            	<!--jvmarg value="-Xdebug" />
+            	<jvmarg value="-Xrunjdwp:transport=dt_socket,address=1000,server=y,suspend=y" /-->
+
+            	<arg value="-application" />
+            	<arg value="com.servoy.eclipse.exporter.war.application" />
+
+            	<arg value="-data" />
+            	<arg value="${test.workspace.dir}" />
+            	<arg value="-s" />
+            	<arg value="@{solutionNames}" />
+            	<arg value="-o" />
+            	<arg value="@{outputDir}" />
+            	<arg value="-as" />
+            	<arg value="${servoy_install.app_server_dir}" />
+            	<arg value="-dbi" />
+        		<arg value="-pluginLocations" />
+        	    <arg value="${servoy_install.developer}/plugins/" />
+                <arg value="-p" />
+                <arg value="${servoy_test_properties}" />
+            	<!-- add here any of the optional arguments supported by the exporter; see 'export -help' for more info; for example: -->
+            	<!--<arg value="-help" />-->
+            	<arg value="-verbose" />
+				<!--<arg value="-ie" /> -->
+        	</java>
+    	</sequential>
+    </macrodef>
+
+    <macrodef name="make-clean-dir">
+        <attribute name="dir"/>
+        <sequential>
+            <delete dir="@{dir}" quiet="true"/>
+            <mkdir dir="@{dir}"/>
+       </sequential>
+    </macrodef>
+
+	<target name="clean">
+    	<!-- clean exports -->
+        <echo level="verbose">
+            *** Cleaning exports ***
+        </echo>
+		<make-clean-dir dir="${servoy.test.target-exports.war}" />
+        <delete file="servoy_log.txt" quiet="true"/> <!-- exporter produces this -->
+        <!-- also delete the workspace log file -->
+        <delete failonerror="false" file="${test.workspace.dir}/.metadata/.log" quiet="true"/>
+
+    	<!-- clean test results -->
+    	<make-clean-dir dir="${log.dir}" />
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset file="junit*.properties"/>
+		</delete>
+
+		<!-- also delete the log file as it is published as an artifact after each jenkins build -->
+		<delete file="${servoy_install.app_server_dir}/servoy_log.txt" quiet="true"/>
+    </target>
+
+    <macrodef name="echotimestamp">
+        <sequential>
+            <local name="timestamp" />
+            <tstamp>
+                <format property="timestamp" pattern="yyyy-MM-dd HH:mm:ss" />
+            </tstamp>
+            <echo message="${timestamp}" />
+        </sequential>
+    </macrodef>
+
+    <macrodef name="latest_jar">
+        <attribute name="pathName"/>
+        <attribute name="propertyName" default="@{pathName}_property"/>
+        <attribute name="dir"/>
+        <attribute name="includes"/>
+        <sequential>
+            <!-- store path to newest JAR -->
+            <path id="@{pathName}">
+                <first count="1">
+                    <sort>
+                        <fileset dir="@{dir}" includes="@{includes}" />
+                        <reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators">
+                            <date />
+                        </reverse>
+                    </sort>
+                </first>
+            </path>
+
+            <!-- create a property as well -->
+           <property name="@{propertyName}" refid="@{pathName}" />
+       </sequential>
+    </macrodef>
+
+</project>

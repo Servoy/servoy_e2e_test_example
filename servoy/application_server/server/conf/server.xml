@@ -1,0 +1,47 @@
+<Server port="8005" shutdown="SHUTDOWN_NOW">
+  <!-- Define the Tomcat Stand-Alone Service -->
+  <Service name="Catalina">
+    <!-- A "Connector" represents an endpoint by which requests are received
+         and responses are returned. Documentation at :
+         Java HTTP Connector: /docs/config/http.html (blocking & non-blocking)
+         Java AJP  Connector: /docs/config/ajp.html
+         APR (HTTP/AJP) Connector: /docs/apr.html
+         Define a non-SSL HTTP/1.1 Connector on port 8080
+    -->
+    
+    <Connector port="8080" 
+    		   protocol="HTTP/1.1" 
+               maxThreads="500" connectionTimeout="60000" 
+               redirectPort="8443" useBodyEncodingForURI="true" 
+                compression="4096"
+               compressableMimeType="text/html,text/xml,text/plain,text/javascript,text/css" />
+    <!-- Note : To disable connection timeouts, set connectionTimeout value to -1 -->
+
+    <!-- Define the top level container in our container hierarchy -->
+    <Engine name="Catalina" defaultHost="localhost">
+
+      <!-- Because this Realm is here, an instance will be shared globally -->
+      <Realm className="org.apache.catalina.realm.MemoryRealm" />
+
+      <!-- Define the default virtual host -->
+	 <Host name="localhost"  appBase="webapps"
+		            unpackWARs="true" autoDeploy="true">
+
+        <!-- Access log processes all requests for this virtual host.  By
+             default, log files are created in the "logs" directory relative to
+             $CATALINA_HOME.  If you wish, you can specify a different
+             directory with the "directory" attribute.  Specify either a relative
+             (to $CATALINA_HOME) or absolute path to the desired directory.
+        -->
+        <Valve className="org.apache.catalina.valves.AccessLogValve"
+                 directory="logs"  prefix="localhost_access_log." suffix=".txt"
+                 pattern="common"/>
+
+        <Context path="/lib" docBase="../../lib"/>
+        <Context path="/plugins" docBase="../../plugins"/>
+        <Context path="/beans" docBase="../../beans"/>
+        <Context path="/lafs" docBase="../../lafs"/>
+      </Host>
+    </Engine>
+  </Service>
+</Server>

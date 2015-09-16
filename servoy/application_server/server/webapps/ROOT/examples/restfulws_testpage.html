@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>RESTFul example</title>
+
+
+<script type="text/javascript" language="javascript">
+   var http_request = false;
+   function makeRequest(method,url, parameters) {
+      http_request = false;
+      if (window.XMLHttpRequest) { // Mozilla, Safari,...
+         http_request = new XMLHttpRequest();
+         if (http_request.overrideMimeType) {
+         	// set type accordingly to anticipated content type
+            http_request.overrideMimeType('text/xml');
+            //http_request.overrideMimeType('text/html');
+         }
+      } else if (window.ActiveXObject) { // IE
+         try {
+            http_request = new ActiveXObject("Msxml2.XMLHTTP");
+         } catch (e) {
+            try {
+               http_request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+         }
+      }
+      if (!http_request) {
+         alert('Cannot create XMLHTTP instance');
+         return false;
+      }
+      
+      http_request.onreadystatechange = alertContents;
+     // http_request.open(method, url, true);
+	  
+      if(method=='GET'){
+			http_request.open(method, url+parameters, true);
+			http_request.setRequestHeader("Content-type", "text/xml");
+			http_request.setRequestHeader("Content-length", parameters.length);
+			http_request.setRequestHeader("Accept", "text/xml");
+			http_request.setRequestHeader("Connection", "close");
+			http_request.send(null);
+		}
+	   if(method=='POST')  {
+			http_request.open(method, url, true);
+			http_request.setRequestHeader("Content-type", "text/xml");
+			http_request.setRequestHeader("Content-length", parameters.length);
+			http_request.setRequestHeader("Accept", "text/xml");
+			http_request.setRequestHeader("Connection", "close");
+			http_request.send(parameters);
+		  }
+	   if(method=='PUT')  {
+			http_request.open(method, url, true);
+			http_request.setRequestHeader("Content-type", "text/xml");
+			http_request.setRequestHeader("Content-length", parameters.length);
+			http_request.setRequestHeader("Accept", "text/xml");
+			http_request.setRequestHeader("Connection", "close");
+			http_request.send(parameters);
+		  }		
+	  
+      if(method=='DELETE'){
+			http_request.open(method, url+parameters, true);
+			http_request.setRequestHeader("Content-type", "text/xml");
+			http_request.setRequestHeader("Content-length", parameters.length);
+			http_request.setRequestHeader("Accept", "text/xml");
+			http_request.setRequestHeader("Connection", "close");
+			http_request.send(null);
+		}		    
+   }
+
+   function alertContents() {
+      if (http_request.readyState == 4) {
+         if (http_request.status == 200 || http_request.status==201) {
+            result = http_request.responseText;
+			 // Turn < and > into &lt; and &gt; (case matters)
+		    result = result.replace(/\<([^!])/g, '&lt;$1');
+		    result = result.replace(/([^-])\>/g, '$1&gt;');			
+            document.getElementById('serverresponse').innerHTML = result;            
+         } else {
+			document.getElementById('serverresponse').innerHTML = http_request.responseText;
+         }
+      }
+   }
+   
+   function postTheForm() {
+      var poststr = document.myform.xmldata.value ;
+      makeRequest('POST',document.myform.endpointURL.value , poststr);
+   }
+   
+   function getTheForm() {
+      var getStr = encodeURI(document.myform.xmldata.value) ;
+      makeRequest('GET',document.myform.endpointURL.value , '');
+   }
+   
+   function putTheForm() {
+      var poststr = document.myform.xmldata.value ;
+      makeRequest('PUT',document.myform.endpointURL.value , poststr);
+   }
+   
+   function deleteTheForm() {
+      var getStr = encodeURI(document.myform.xmldata.value) ;
+      makeRequest('DELETE',document.myform.endpointURL.value , '');
+   }
+</script>
+</head>
+
+<body>
+
+
+<p>The form below can be used to send arbitary content to a URL using HTTP GET/POST/PUT/DELETE operations.<br></p>
+<form action="javascript:get(document.getElementById('myform'));" name="myform" id="myform">
+  <table width="100%"  border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td><b>Endpoint URL</b></td>
+      <td colspan="3"><input name="endpointURL" type="text" value="http://localhost:8080/servoy-service/rest_ws/servoy_sample_rest_ws/ws_employees" size="100"></td>
+    </tr>
+	<tr>
+	  <td></td>
+      <td><input type="button" name="getbutton" value="SEND via GET"  onclick="javascript:getTheForm();">
+	  <input type="button" name="deletebutton" value="SEND via DELETE" onclick="javascript:deleteTheForm();"></td>
+    </tr>
+	<tr>
+	  <td>&nbsp;</td>
+	  <td></td>
+    </tr>
+    <tr>
+      <td><b>XML to send</b> </td>
+      <td colspan="3"><textarea name="xmldata" cols="100" rows="15">&lt;firstName&gt;John&lt;/firstName&gt;&lt;lastName&gt;Doe&lt;/lastName&gt;</textarea></td>
+  	</tr>
+   <tr>
+	  <td></td>
+      <td><input type="button" name="postbutton" value="SENT via POST" onclick="javascript:postTheForm();">
+      <input type="button" name="putbutton" value="SEND via PUT" onclick="javascript:putTheForm();"></td>
+    </tr>
+  </table>
+</form>
+
+<h3><br>
+  <br>
+Server-Response:<br>
+</h3>
+<hr>
+<span name="serverresponse" id="serverresponse"></span>
+
+
+</body>
+</html>

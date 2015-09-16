@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title> Finding text (strings) </title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<meta name="Generator" content="AITPublish" />
+<meta name="Keywords" content="Finding text (strings)" />
+<link rel="stylesheet" type="text/css" href="44.css" />
+<script language="javascript" type="text/javascript" src="dhtml_toc.js"></script>
+</head>
+<body onload="if (isTOCLoaded()) {expand('1189');expand('161');highlight('1190')}" text="#000000" link="#0000A0" alink="#008000" vlink="#FF0000"><table cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "18">
+<p class="bodytext"><a href="1189.htm" target="_self"><img src="125.gif" alt="Previous Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+<td width= "18">
+<p class="bodytext"><a href="1191.htm" target="_self"><img src="124.gif" alt="Next Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+<td width= "48">
+<p class="bodytext"><a href="javascript:expand('1189');expand('161');highlight('1190')" onclick="loadTOC()" target="_self"><img src="122.gif" alt="Book Contents" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+<td width= "48">
+<p class="bodytext"><a href="indexpage.htm" target="TOC"><img src="123.gif" alt="Book Index" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+</tr>
+</table>
+<h3 class="heading3">Finding text (strings)</h3>
+<p class="bodytext">Nearly all possible text string searches are supported in Servoy.</p>
+<p class="procedureheading">To find a text string:</p>
+<ul class="listbullet"><li class="listbullet">Choose <span class="specialbold2">Select</span> <span class="monospace2">&gt;</span> <span class="specialbold2">Find</span> or press CTRL-F / CMD-F.</li><li class="listbullet">Click in a text field.</li><li class="listbullet">Type in your find request.</li><li class="listbullet">Press <span class="specialbold2">Enter</span> or F3 to perform the find.</li></ul><p class="tablebodytext2"></p>
+<p class="bodytext">A text search can be:</p>
+<ul class="listbullet"><li class="listbullet"><i class="emphasis"><i class="emphasis">Case sensitive<br /></i></i></li></ul><p class="list2">For example, if you search for <span class="monospace">Hotel</span> only rows <i class="emphasis">matching</i> <span class="monospace">Hotel</span> will be returned. Rows containing <span class="monospace">hotel</span> or <span class="monospace">Nice Hotel</span> will <i class="emphasis">not</i> be returned. <br /></p>
+<ul class="listbullet"><li class="listbullet"><i class="emphasis"><i class="emphasis">Case insensitive</i></i></li></ul><p class="list2">To search <i class="emphasis">case insensitive,</i> use a <span class="specialbold2">#</span> symbol in front of your <br />search criteria.<br /></p>
+<p class="list2">As an example, if you search for #h<span class="monospace">otel</span> rows <i class="emphasis">matching</i> <span class="monospace">hotel</span>, <span class="monospace">HOTEL </span>and<span class="monospace"> Hotel</span> will be returned.<br /> </p>
+<p class="bodytext">By default, a <i class="emphasis">case insensitive</i> equisearch (exact match) is performed for optimal performance.<br /></p>
+<p class="bodytext"><span class="specialbold2">Wildcards</span></p>
+<p class="bodytext">A <i class="emphasis">wildcard </i>character <span class="specialbold2">%</span>, representing one or more unknown characters, can be used in your search request. </p>
+<p class="bodytext">To escape wildcards - use the literal wildcard symbol in your search criteria - type a backslash &quot;<span class="specialbold2">\</span>&quot; in front of the wildcard character. For example <span class="specialbold2">\%</span> will search for the character %<span class="monospace">.</span></p>
+<p class="bodytext"><span class="specialbold2">Null values</span></p>
+<p class="bodytext">A NULL value character <span class="specialbold2">^</span>, representing a NULL (not existing) value, can also be used in your search request.</p>
+<p class="bodytextpretable">Below is a list of text search possibilities:</p>
+<table width="480" cellpadding="2" cellspacing="0" border="0" style="border-collapse:collapse">
+<tr align="left" valign="top">
+<th bgcolor="#CFCFCF" style = "border-left:1px solid #CFCFCF;border-right:1px solid #CFCFCF;border-top:1px solid #CFCFCF;border-bottom:2px solid #CFCFCF;" width="152"><p class="specialbold3a">To find</p>
+</th>
+<th bgcolor="#CFCFCF" style = "border-left:1px solid #CFCFCF;border-right:1px solid #CFCFCF;border-top:1px solid #CFCFCF;border-bottom:2px solid #CFCFCF;" width="132"><p class="specialbold3a">Enter this</p>
+</th>
+<th bgcolor="#CFCFCF" style = "border-left:1px solid #CFCFCF;border-right:1px solid #CFCFCF;border-top:1px solid #CFCFCF;border-bottom:2px solid #CFCFCF;" width="196"><p class="specialbold3a">Example</p>
+</th>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="152"><p class="tablebodytext">Field data that is dependent on casing (case sensitive)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-bottom:1px solid #EFEFEF;" width="132"><p class="tablebodytext">characters that match in casing</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="196"><p class="tablebodytext"><span class="specialbold6">Hotel</span> will return only records that match <span class="monospace2">Hotel</span>; not <span class="monospace2">hotel</span></p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="152"><p class="tablebodytext">Field data that is independent of casing (case insensitive)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="132"><p class="tablebodytext">#characters</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="196"><p class="tablebodytext"><span class="specialbold6">#hotel</span> will return records that match <span class="monospace2">hotel</span><span class="monospace">, </span><span class="monospace2">HOTEL</span><span class="monospace">, </span><span class="monospace2">Hotel</span></p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="152"><p class="tablebodytext">Field data that starts with specific characters</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="132"><p class="tablebodytext">the characters followed by %</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="196"><p class="tablebodytext"><span class="specialbold6">B%</span> will return records that start with an uppercase <span class="monospace2">B</span></p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="152"><p class="tablebodytext">Field data that ends with specific characters</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="132"><p class="tablebodytext">% followed by the characters</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="196"><p class="tablebodytext"><span class="specialbold6">%e</span> will return records that end with lowercase <span class="monospace2">e</span></p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="152"><p class="tablebodytext">Field data that contains specific characters</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="132"><p class="tablebodytext">%characters%</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="196"><p class="tablebodytext"><span class="specialbold6">%r%</span> will return records that contain a lowercase <span class="monospace2">r</span></p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="152"><p class="tablebodytext">Field data that contains NULL values (not existing)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="132"><p class="tablebodytext">^</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="196"><p class="tablebodytext"><span class="specialbold6">^</span> will return records that contain a NULL value</p>
+</td>
+</tr>
+
+</table>
+<p class="tablebodytext2"></p>
+<p class="bodytext">To perform a find using a range of information, see the section <span class="specialbold5"><a id="h294" class="" title="Finding ranges of information" href="235.htm" target="_self">Finding ranges of information</a></span>.</p>
+<p class="bodytext"></p>
+<p class="note"><b class="specialbold4">NOTE:</b>  In most SQL databases, an empty value is something different than a NULL value (not existing).</p>
+<p class="tablebodytext2"></p>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "226.8">
+<p class="relatedheading">See Also</p><p class="relateditem"><a href="1189.htm" target="_self">Finding data</a></p><p class="relateditem"><a href="1191.htm" target="_self">Finding numbers</a></p><p class="relateditem"><a href="1192.htm" target="_self">Finding dates and times</a></p><p class="relateditem"><a href="235.htm" target="_self">Finding ranges of information</a></p><p class="relateditem"><a href="1194.htm" target="_self">Finding data in related fields</a></p><p class="relateditem"><a href="1195.htm" target="_self">Using multiple find criteria</a></p><p class="relateditem"><a href="1255.htm" target="_self">Excluding records from your found set</a></p><p class="relateditem"><a href="1199.htm" target="_self">Extending the found set</a></p><p class="relateditem"><a href="1200.htm" target="_self">Reducing the found set</a></p></td>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+

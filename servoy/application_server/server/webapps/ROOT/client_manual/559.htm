@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title> Importing dates </title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<meta name="Generator" content="AITPublish" />
+<meta name="Keywords" content="Dates and times (see also Formatting dates and times)	Importing dates, Importing	Importing dates" />
+<link rel="stylesheet" type="text/css" href="44.css" />
+<script language="javascript" type="text/javascript" src="dhtml_toc.js"></script>
+</head>
+<body onload="if (isTOCLoaded()) {expand('170');highlight('559')}" text="#000000" link="#0000A0" alink="#008000" vlink="#FF0000"><table cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "18">
+<p class="bodytext"><a href="1250.htm" target="_self"><img src="125.gif" alt="Previous Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+<td width= "18">
+<p class="bodytext"><a href="1079.htm" target="_self"><img src="124.gif" alt="Next Topic" height="17" width="18" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+<td width= "48">
+<p class="bodytext"><a href="javascript:expand('170');highlight('559')" onclick="loadTOC()" target="_self"><img src="122.gif" alt="Book Contents" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+<td width= "48">
+<p class="bodytext"><a href="indexpage.htm" target="TOC"><img src="123.gif" alt="Book Index" height="17" width="48" vspace="0" hspace="0" align="bottom" border="0" /></a></p></td>
+</tr>
+</table>
+<h2 class="heading2">Importing dates</h2>
+<p class="bodytext">When you import data, you can specify the format of date and time fields. You have to specify the format according to the standardized formatting used in Servoy which is shown below.</p>
+<p class="tablebodytext2"></p>
+<p class="bodytextpretable">Within the sub-patterns, you specify formatting with special symbols:</p>
+<table width="480" cellpadding="2" cellspacing="0" border="0" style="border-collapse:collapse">
+<tr align="left" valign="top">
+<td bgcolor="#CFCFCF" style = "border:1px solid #CFCFCF;" width="67"><p class="specialbold3a">Symbol</p>
+</td>
+<td bgcolor="#CFCFCF" style = "border:1px solid #CFCFCF;" width="122"><p class="specialbold3a">Meaning</p>
+</td>
+<td bgcolor="#CFCFCF" style = "border:1px solid #CFCFCF;" width="93"><p class="specialbold3a">Presentation</p>
+</td>
+<td bgcolor="#CFCFCF" style = "border:1px solid #CFCFCF;" width="198"><p class="specialbold3a">Used To Format</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">G</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Era designator</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Text</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">AD</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">y</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Year</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">1996</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">M</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Month in year</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Text &amp; Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">July &amp; 07</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">d</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Day in month</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">10</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">h</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Hour in am/pm (1-12)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">12</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">H</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Hour in day (0-23)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">0</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">m</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Minute in hour</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">30</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">s</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Second in minute</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">55</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">S</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Millisecond</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">978</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">E</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Day in week</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Text</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">Tuesday</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">D</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Day in year</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">189</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">F</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Day of week in month</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">2 (2nd Wed in July)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">w</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Week in year</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">27</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">W</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Week in month</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">2</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">a</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">AM/PM marker</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Text</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">PM</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">k</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Hour in day (1-24)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">24</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">K</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Hour in am/pm (0-11)</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Number</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">0</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">z</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Time zone</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Text</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">Pacific Standard Time</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="67"><p class="tablebodytext">'</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="122"><p class="tablebodytext">Escape for text</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="93"><p class="tablebodytext">Delimiter</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="198"><p class="tablebodytext">(none)</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="67"><p class="tablebodytext"> ''</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="122"><p class="tablebodytext">Single quote</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="93"><p class="tablebodytext">Literal</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="198"><p class="tablebodytext">'</p>
+</td>
+</tr>
+
+</table>
+<p class="tablebodytext2"></p>
+<p class="bodytextpretable"><span class="specialbold2">Here are examples of formatting dates and times:</span></p>
+<table width="480" cellpadding="2" cellspacing="0" border="0" style="border-collapse:collapse">
+<tr align="left" valign="top">
+<th bgcolor="#CFCFCF" style = "border:1px solid #CFCFCF;" width="207"><p class="specialbold3a">Pattern</p>
+</th>
+<th bgcolor="#CFCFCF" style = "border:1px solid #CFCFCF;" width="273"><p class="specialbold3a">Output</p>
+</th>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">dd.MM.yy</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #EFEFEF;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">09.04.04</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">yyyy.MM.dd G 'at' hh:mm:ss z</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">2004.04.09 AD at 06:15:55 PDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">EEE, MMM d, ''yy</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">Thu, Apr 9, '04</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">h:mm a</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">6:15 PM</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">H:mm</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">18:15</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">H:mm:ss:SSS</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">18:15:55:624</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="207"><p class="tablebodytext">K:mm a,z</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #EFEFEF;" width="273"><p class="tablebodytext">6:15 PM, PDT</p>
+</td>
+</tr>
+<tr align="left" valign="top">
+<td bgcolor="#EFEFEF" style = "border-left:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="207"><p class="tablebodytext">yyyy,MMMMM.dd GGG hh:mm aaa</p>
+</td>
+<td bgcolor="#EFEFEF" style = "border-right:1px solid #EFEFEF;border-top:1px solid #7F7F7F;border-bottom:1px solid #7F7F7F;" width="273"><p class="tablebodytext">2004.April.09 AD 06:15 PM</p>
+</td>
+</tr>
+
+</table>
+<p class="bodytext"></p>
+<table cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<td width= "226.8">
+<p class="relatedheading">See Also</p><p class="relateditem"><a href="170.htm" target="_self">Importing and Exporting Data</a></p><p class="relateditem"><a href="1009.htm" target="_self">Introduction to importing and exporting</a></p><p class="relateditem"><a href="1248.htm" target="_self">Importing data from a text file</a></p><p class="relateditem"><a href="1250.htm" target="_self">Importing data from an Excel file</a></p><p class="relateditem"><a href="1079.htm" target="_self">Cancelling the importing of data</a></p><p class="relateditem"><a href="1252.htm" target="_self">Exporting data as a text file</a></p><p class="relateditem"><a href="1254.htm" target="_self">Exporting data as an Excel file</a></p><p class="relateditem"><a href="1080.htm" target="_self">Cancelling the exporting of data</a></p></td>
+</tr>
+</table>
+
+
+</body>
+</html>
+
+

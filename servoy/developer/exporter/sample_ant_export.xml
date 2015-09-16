@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+
+<!-- Works with Ant 1.7.0 and higher -->
+<!-- These are useful combined with command line/ant test runners for mobile/smart client solutions exports; -->
+<!-- see Servoy Wiki - Building A Software Factory for how to use test runners with ant on these exports -->
+<project name="Ant Solution Exporter" default="export_solution" basedir=".">
+
+    <property name="eclipse_home" value=".." />
+    <property name="workspace_location" value="[this is the path to the workspace containing the solution to be exported]" />
+    <property name="solution_name" value="[solution to be exported]" />
+    <property name="output_dir" value="[dir where the exported solution file will be created]" />
+	
+    <target name="setup">
+        <!-- store path to newest Eclipse launcher JAR in path id 'newest.equinox.launcher.path.id' -->
+        <path id="newest.equinox.launcher.path.id">
+            <first count="1">
+              <sort>
+                <fileset dir="${eclipse_home}/plugins" includes="**/org.eclipse.equinox.launcher_*.jar" />
+                <reverse xmlns="antlib:org.apache.tools.ant.types.resources.comparators">
+                  <date />
+                </reverse>
+              </sort>
+            </first>
+        </path>
+
+        <!-- turn the path into a property -->
+        <property name="equinox.launcher.jar.location" refid="newest.equinox.launcher.path.id" />
+
+        <!-- now we are ready to start the workspace exporter -->
+        <echo level="info" message="Using equinox launcher jar: ${equinox.launcher.jar.location}" />
+    </target>
+	
+    <target name="export_solution" depends="setup">
+        <java   classname="org.eclipse.equinox.launcher.Main"
+                classpath="${equinox.launcher.jar.location}"
+                failonerror="true"
+                fork="true">
+            <jvmarg value="-Xms40m" />
+            <jvmarg value="-Xmx512m" />
+            <jvmarg value="-XX:MaxPermSize=256M" />
+            <jvmarg value="-Dosgi.configuration.cascaded=false" />
+        	<jvmarg value="-Djava.awt.headless=true" />
+            <arg value="-application" />
+            <arg value="com.servoy.eclipse.exporter.solution.application" />
+        	
+            <arg value="-data" />
+            <arg value="${workspace_location}" />
+            <arg value="-s" />
+            <arg value="${solution_name}" />
+            <arg value="-o" />
+            <arg value="${output_dir}" />
+            <!-- add here any of the optional arguments supported by the exporter; see 'export -help' for more info -->
+        </java>
+    </target>
+  
+    <target name="export_mobile_solution" depends="setup">
+        <java   classname="org.eclipse.equinox.launcher.Main"
+                classpath="${equinox.launcher.jar.location}"
+                failonerror="true"
+                fork="true">
+            <jvmarg value="-Xms40m" />
+            <jvmarg value="-Xmx512m" />
+            <jvmarg value="-XX:MaxPermSize=256M" />
+            <jvmarg value="-Dosgi.configuration.cascaded=false" />
+        	<jvmarg value="-Djava.awt.headless=true" />
+            <arg value="-application" />
+            <arg value="com.servoy.eclipse.exporter.mobile.application" />
+        	
+            <arg value="-data" />
+            <arg value="${workspace_location}" />
+            <arg value="-s" />
+            <arg value="${solution_name}" />
+            <arg value="-o" />
+            <arg value="${output_dir}" />
+            <!-- add here any of the optional arguments supported by the exporter; see 'mobile_export -help' for more info -->
+        </java>
+    </target>
+
+    <target name="export_war" depends="setup">
+        <java   classname="org.eclipse.equinox.launcher.Main"
+                classpath="${equinox.launcher.jar.location}"
+                failonerror="true"
+                fork="true">
+            <jvmarg value="-Xms40m" />
+            <jvmarg value="-Xmx512m" />
+            <jvmarg value="-XX:MaxPermSize=256M" />
+            <jvmarg value="-Dosgi.configuration.cascaded=false" />
+        	<jvmarg value="-Djava.awt.headless=true" />
+            <arg value="-application" />
+            <arg value="com.servoy.eclipse.exporter.war.application" />
+        	
+            <arg value="-data" />
+            <arg value="${workspace_location}" />
+            <arg value="-s" />
+            <arg value="${solution_name}" />
+            <arg value="-o" />
+            <arg value="${output_dir}" />
+            <!-- add here any of the optional arguments supported by the exporter; see 'war_export -help' for more info -->
+        </java>
+    </target>
+
+</project>

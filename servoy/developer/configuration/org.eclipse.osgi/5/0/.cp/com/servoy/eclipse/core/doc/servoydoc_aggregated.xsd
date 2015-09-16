@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<xs:include schemaLocation="servoydoc.xsd" />
+
+	<xs:element name="aggregatedDocs" type="all" />
+
+	<xs:complexType name="all">
+		<xs:sequence>
+			<xs:element name="servoydoc" type="documentation"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="reservedKeywords" type="keywordlistoflist"
+				minOccurs="1" maxOccurs="1" />
+			<xs:element name="markers" type="markerlist" minOccurs="1"
+				maxOccurs="1" />
+			<xs:element name="webAdminSettings" type="webadminlist"
+				minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="version" type="xs:string" use="required"></xs:attribute>
+		<xs:attribute name="buildNumber" type="xs:string" use="required"></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="documentation">
+		<xs:sequence>
+			<xs:element name="runtime" type="objectlist" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="designtime" type="objectlist" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="plugins" type="objectlist" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="beans" type="objectlist" maxOccurs="1"
+				minOccurs="0" />
+			<xs:element name="jslib" type="objectlist" maxOccurs="1"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="keywordlistoflist">
+		<xs:sequence>
+			<xs:element name="keywords" type="keywordlist" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="keywordlist">
+		<xs:sequence>
+			<xs:element name="keyword" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="category" type="xs:string" use="required"></xs:attribute>
+	</xs:complexType>
+
+	<xs:complexType name="markerlist">
+		<xs:sequence>
+			<xs:element name="marker" type="marker" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="marker">
+		<xs:sequence>
+			<xs:element name="message" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="description" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="fix" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required" />
+		<xs:attribute name="type" type="xs:string" use="required" />
+		<xs:attribute name="typecode" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="webadminlist">
+		<xs:sequence>
+			<xs:element name="category" type="category" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="category">
+		<xs:sequence>
+			<xs:element name="property" type="property" maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="property">
+		<xs:sequence>
+			<xs:element name="description" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="defaultValue" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="options" type="optionlist" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="optionlist">
+		<xs:sequence>
+			<xs:element name="option" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

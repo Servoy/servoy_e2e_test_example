@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Created-By: 1.7.0_80-ea (Oracle Corporation)
+
+Name: eclipse_update_120.jpg
+SHA1-Digest: IydL3lnQQQF8OVmO7CZ6uea8T0k=
+
+Name: license.html
+SHA1-Digest: Z5WKoRSIDCgQNswUpOU/oSPE2a0=
+
+Name: feature.xml
+SHA1-Digest: rkDu069RugoP4IHjzYlsZfTQUas=
+
+Name: epl-v10.html
+SHA1-Digest: jYDaDJLBJpthCwPMgGFVYASJjIU=
+
+Name: feature.properties
+SHA1-Digest: Kudsp4fMC4gQvnMxKaouKSE8860=
+
