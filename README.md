@@ -19,7 +19,7 @@
 
 The entry point is e2e_test_runner.xml. It takes a servoy solution project (the 'hello' folder), exports it as a war file ('e2e/war_export/hello.war'), starts a tomcat server instance (the 'apache-tomcat-8.0.24' folder),  deploys the war, runs the protractor test scripts e2e/spec/hello/*_spec.js, undeploys the war file and shuts down tomcat.
 
-###  The test script supports testing multiple solutions sequentially.
+The test script supports testing multiple solutions sequentially.
 
 For each tested solution (in this example there is only one) the folder e2e/spec/ has to contain a folder with the same name as the tested solution. So for each tested solution, the script looks in e2e/spec for a folder with the exact name as the solution and runs all the files ending in '_spec.js'.
 
