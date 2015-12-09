@@ -17,11 +17,11 @@
 
 ### Description
 
-The entry point is e2e_test_runner.xml. It takes a servoy solution project (the 'hello' folder), exports it as a war file ('e2e/war_export/hello.war'), starts a tomcat server instance (the 'apache-tomcat-8.0.24' folder),  deploys the war, runs the protractor test scripts e2e/spec/hello/*_spec.js, undeploys the war file and shuts down tomcat.
+The entry point is e2e_test_runner.xml. It takes a servoy solution project (the 'hello' folder), exports it as a war file ('e2e/war_export/hello.war'), starts a tomcat server instance (the 'apache-tomcat-8.0.24' folder),  deploys the war, runs the protractor test scripts e2e/spec/hello/*_spec.js, and the selenium test scripts e2e/selenium/hello/*_test, undeploys the war file and shuts down tomcat.
 
 The test script supports testing multiple solutions sequentially.
 
-For each tested solution (in this example there is only one) the folder e2e/spec/ has to contain a folder with the same name as the tested solution. So for each tested solution, the script looks in e2e/spec for a folder with the exact name as the solution and runs all the files ending in '_spec.js'.
+For each tested solution (in this example there is only one) the folder e2e/spec/ and e2e/selenim has to contain a folder with the same name as the tested solution. So for each tested solution, the script looks in e2e/spec and e2e/selenium for a folder with the exact name as the solution and runs all the files ending in '_spec.js' and '_test' for selenium
 
 To add another solution, check out the project (and it's resources project) in the jenkins workspace near the 'hello' project and add its name in test_runner.properties in the variable 'solutions_to_export_as_war_tests'. Eg:
 
@@ -30,7 +30,7 @@ solutions_to_export_as_war_tests			= hello,\
 mySolution
 ```
 
-Tests should then be added in the folder e2e/spec/mySolution/ and should end with '_spec.js'.*. The second solution will be deployed and tested after the first solution has been undeployed.
+Tests should then be added in the folder e2e/spec/mySolution/ and e2e/selenium/mySolution/ and should end with '_spec.js'.* and '_test' for selenium. The second solution will be deployed and tested after the first solution has been undeployed.
 
 
 
@@ -61,4 +61,4 @@ e2e/testResults/*.xml
 
 6 Optionally add a 'Run Sauce Labs Test Publisher' post build action.
 
-*This configuration can be changed in e2e/servoyConfigurator.js. To changed other protractor (http://www.protractortest.org/#/) settings see file e2e/protractor.config.js.template. It is currently a template because before each run the ant script injects the sauce labs credentials specified as ant properties.
+*This configuration can be changed in e2e/servoyConfigurator.js. To changed other protractor (http://www.protractortest.org/#/) settings see file e2e/protractor.config.js.template. It is currently a template because before each run the ant script injects the sauce labs credentials specified as ant properties. To change selenese-runner settings, that are used for running selenim test, see files e2e/selenese.config.json and e2e/selenese.properties
