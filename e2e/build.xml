@@ -5,7 +5,7 @@
 	If you set 'sauceUser' and 'sauceKey' in protractorConfig.js the  tests will run on sauceLabs.
 
 	To run on jenkins with saucelabs use 'run_tests' .
- 	
+
 
 -->
 <project  default="run_tests">
@@ -27,7 +27,7 @@
 					<arg value="outdated"/>
 		</exec>
 	</target>
-<!-- PROTRACTOR INSTALL TASKS -->
+   <!-- PROTRACTOR INSTALL TASKS -->
 	 <!-- used to run install protractor only once -->
 	 <target name="protractor_installed_check" >
 	    <condition property="protractor.installed">
@@ -62,10 +62,12 @@
 		</exec>
 	</target>
 
+  <!-- RUNNING TASKS -->
 
-<!-- RUNNING TASKS -->
+  <target name="run_all_tests" depends="run_protractor_tests, run_selenium_tests" />
+
 	<!-- use this target for jenkins and saucelabs .  It does not require selenium webdiver which is 44 mb -->
-	<target name="run_tests" depends="install_protractor_if_necessary">
+	<target name="run_protractor_tests" depends="install_protractor_if_necessary">
 		<exec executable="cmd" dir="${basedir}" osfamily="windows"
 					failonerror="true">
 					<arg value="/c"/>
@@ -81,7 +83,149 @@
 		</exec>
 	</target>
 
+  <target name="run_selenium_tests" depends="get_selenese_tests_cmd">
+    <echo message="Run selenium scripts started"/>
+    <echo message="Solution name ${solution.name}"/>
 
+    <for param="cmdline" list="${selenese.cmds}" delimiter=",">
+        <sequential>
+            <echo message= "@{cmdline}"/>
+            <antcall target="run_selenese">
+                <param name="selenese.cmdline" value="@{cmdline}"/>
+            </antcall>
+        </sequential>
+     </for>
+  </target>
 
+  <!-- run selenese-runner from commandline -->
+	<target name="run_selenese">
+		<!-- <echo message="Run ${selrunner.cmdline}"/> -->
+
+		<exec executable="cmd" dir="${basedir}" osfamily="windows" failonerror="false" resultproperty="exitCode">
+			<arg line="${selenese.cmdline}"/>
+		</exec>
+
+		<exec executable="java" dir="${basedir}" osfamily="unix" failonerror="false" resultproperty="exitCode">
+			<arg line="${selenese.cmdline}"/>
+		</exec>
+
+		<condition property="tests_failed">
+			<or>
+				<equals arg1="${exitCode}" arg2="1"/>
+				<equals arg1="${exitCode}" arg2="3"/>
+				<equals arg1="${exitCode}" arg2="4"/>
+				<equals arg1="${exitCode}" arg2="5"/>
+			</or>
+		</condition>
+
+		<fail if="tests_failed" message="FAILED: Test execution failed for one of the test solutions; see messages above."/>
+	</target>
+
+  <!-- Build the command line to execute selenese-runner java -jar selenese-runner.jar -c ${selrunner.conf} [selrunner.config.json] ui_tests/solName/*_test -->
+	<target name="get_selenese_tests_cmd" depends="get_os_family">
+		<script language="javascript">
+      <![CDATA[
+
+			var File = java.io.File;
+			var FileReader = java.io.FileReader;
+			var BufferedReader = java.io.BufferedReader;
+			var FileWriter = java.io.FileWriter;
+			var BufferedWriter = java.io.BufferedWriter;
+
+			var isWindows = project.getProperty("isWindows");
+
+      // recursive function to get all files in directory having matching criteria
+      function getFiles(directoryPath, files) {
+        var directory = new File(directoryPath);
+        var fList = directory.listFiles();
+        if (!fList) {
+          return;
+        }
+
+        // get all the files from a directory
+        for (var j=0; j<fList.length; j++) {
+				    var file = fList[j];
+            if (file.isFile()) {
+				        // only test suites with name *_test
+                var reg = new RegExp(/_test$/)
+                if (reg.test(file)) {
+                  files.push(file.getAbsolutePath());
+				        }
+            }
+            else if (file.isDirectory()) {
+              getFiles(file.getAbsolutePath(), files);
+				    }
+				}
+			}
+
+			// read properties from file selenese.config.json
+			echo = project.createTask("echo");
+			echo.setMessage("Parsing selenese.config.json");
+			echo.perform();
+
+			var file = new File("e2e/selenese.config.json");
+			fr = new FileReader(file);
+			br = new BufferedReader(fr);
+
+			// Read the whole json file.
+			var json = "";
+			do {
+				var text = br.readLine();
+				if (text) {
+					json += text;
+				}
+			}
+			while (text)
+			br.close();
+
+			echo = project.createTask("echo");
+			echo.setMessage("Read selenese.config.json");
+			echo.perform();
+
+			// Evaluate the JSON.
+			var struct = eval("(" + json + ")");
+
+			var cmds = "";
+
+			// Run selenese-runner for each configuration in the selenese.config.json
+			// It assumes the file is an Array of JSON objects well formatted
+			for (config in struct) {
+				var cmdLine = isWindows == 'true' ? "/c java -jar ./selenese-runner.jar -c ./selenese.properties" : "-jar ./selenese-runner.jar -c ./selenese.properties";
+
+				// add each option specified in the selenese.config
+				for (option in struct[config]) {
+					cmdLine += " " + option + " " + struct[config][option];
+				}
+
+				var directory = isWindows == 'true' ? "e2e\\selenium\\" : "e2e/selenium/";
+				directory += project.getProperty("solution.name");
+
+				var files = [];
+				getFiles(directory, files);
+				cmdLine += " " + files.join(" ");
+
+				cmds = cmds + cmdLine + ",";
+			}
+
+			// remove comma from last item
+			if (cmds.length) {
+				cmds = cmds.substring(0, cmds.length-1);
+			}
+
+			// store all command lines
+			project.setProperty("selenese.cmds", cmds);
+		]]>
+		</script>
+	</target>
+
+	<target name="get_os_family">
+  		<condition value="true" property="isWindows">
+		 		<os family="windows"/>
+			</condition>
+			<condition value="false" property="isWindows">
+		 		<os family="unix"/>
+			</condition>
+			<echo message="Running on Windows ? ${isWindows}"/>
+	</target>
 
 </project>

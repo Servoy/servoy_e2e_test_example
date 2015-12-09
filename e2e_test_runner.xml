@@ -2,17 +2,17 @@
 
 <project name="test_runner" default="run_war_solution_tests" basedir=".">
 
-    
-	<target name="run_war_solution_tests" depends="export_war_solutions, prepare_export_log, run_protractor_tests"/>
+
+	<target name="run_war_solution_tests" depends="export_war_solutions, prepare_export_log, run_e2e_tests"/>
     <target name="load_properties">
 		<property file="test_runner.properties"/>
     </target>
-	
+
 	<target name="export_war_solutions" depends="load_properties, clean">
 		<export-solutions-as-war solutionNames="${solutions_to_export_as_war_tests}" outputDir="${servoy.test.target-exports.war}"/>
     </target>
 
-	<target name="run_protractor_tests" depends="load_properties">
+	<target name="run_e2e_tests" depends="load_properties">
 		<!-- Configure the custom Ant tasks for the Tomcat Manager application -->
 		<!-- Current folder is in servoy_test/config -->
 		<property name="e2etests.dir" value="e2e" />
@@ -30,25 +30,26 @@
 				<include name="tomcat-juli.jar"/>
 			</fileset>
 		</path>
-        <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+    <!-- taskdef resource="net/sf/antcontrib/antcontrib.properties"/ -->
+    <taskdef resource="net/sf/antcontrib/antlib.xml"/>
 		<taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant-classpath"/>
 		<taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant-classpath"/>
 		<property name="absolute.path" location="."/>
-    	
-		
-		
+
+
+
         <copy file="${e2etests.dir}/protractor.config.js.template" toFile="${e2etests.dir}/protractor.config.js" overwrite="true">
             <filterset>
                 <filter token="{sauceUserPlaceholder}"                   value="${sauceUserPlaceholder}"/>
                 <filter token="{sauceKeyPlaceholder}"                    value="${sauceKeyPlaceholder}"/>
             </filterset>
-        </copy> 
+        </copy>
 
 		<trycatch>
 			<try>
 				<echo level="info" message="Trying to stop any previously started tomcat that was left behind unintentionally (if any)."/>
 				<tomcat-stop/>
-				
+
                 <tomcat-start/>
 				<sleep seconds="10"/>
 				<for list="${solutions_to_export_as_war_tests}" param="solution.name">
@@ -60,7 +61,7 @@
 								<deploy url="${e2e.tomcat.manager_url}" username="${e2e.tomcat.username}" password="${e2e.tomcat.password}"
 									path="/@{solution.name}" localWar="${absolute.path}/${servoy.test.target-exports.war}/@{solution.name}.war"/>
 					            <sleep seconds="10"/> <!-- shouldn't the deploy task wait itself until it is ready to use -->
-								<ant antfile="build.xml" target="run_tests" dir="${e2etests.dir}">
+								<ant antfile="build.xml" target="run_all_tests" dir="${e2etests.dir}">
 									   <property name="solution.name" value="@{solution.name}"/>
 								</ant>
 							</try>
@@ -103,7 +104,7 @@
         	        JAVA_OPTS = ${environment_v.JAVA_OPTS} (before running Tomcat).
         	        CATALINA_OPTS = ${environment_v.CATALINA_OPTS} (before running Tomcat).
         	</echo>
-        	
+
         	<echo level="info" message="Using JDK ${jdk1.8_home}."/>
             <property name="absolute.tomcat" location="${e2e.tomcat.dir}"/>
     		<exec dir="${e2e.tomcat.dir}/bin" executable="sh" osfamily="unix" newenvironment="true">
@@ -120,8 +121,8 @@
     			<arg line="startup.bat"/>
     		</exec>
        </sequential>
-    </macrodef>	
-	
+    </macrodef>
+
     <macrodef name="tomcat-stop">
         <sequential>
         	<echo level="info" message="Stopping Tomcat"/>
@@ -146,13 +147,12 @@
 		<move file="servoy_log.txt" tofile="${log.dir}/workspace_exporter_app_server_log.txt" failonerror="false"/>
 		<move file="${test.workspace.dir}/.metadata/.log" tofile="${log.dir}/workspace_exporter_workspace_log.txt" failonerror="false"/>
     </target>
-	
+
 
     <target name="prepare_test_run_log">
 		<move file="${servoy_install.app_server_dir}/servoy_log.txt" tofile="${log.dir}/import_test_client_log.txt" failonerror="false"/>
     </target>
-	
-  
+
     <macrodef name="export-solutions-as-war">
         <attribute name="solutionNames"/>
         <attribute name="outputDir"/>
@@ -202,7 +202,7 @@
 				<!--<arg value="-ie" /> -->
         	</java>
     	</sequential>
-    </macrodef>	
+    </macrodef>
 
     <macrodef name="make-clean-dir">
         <attribute name="dir"/>
@@ -211,7 +211,7 @@
             <mkdir dir="@{dir}"/>
        </sequential>
     </macrodef>
-    
+
 	<target name="clean">
     	<!-- clean exports -->
         <echo level="verbose">
@@ -231,7 +231,7 @@
 		<!-- also delete the log file as it is published as an artifact after each jenkins build -->
 		<delete file="${servoy_install.app_server_dir}/servoy_log.txt" quiet="true"/>
     </target>
-	
+
     <macrodef name="echotimestamp">
         <sequential>
             <local name="timestamp" />
