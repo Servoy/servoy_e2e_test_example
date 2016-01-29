@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://localhost:8080/" />
 <title>label_update</title>
 </head>
 <body>
@@ -17,9 +16,22 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
+	<td>waitForElementPresent</td>
 	<td>//*[@data-svy-name='world.mybutton']</td>
+	<td>5</td>
+</tr>
+
+<tr>
+	<td>click</td>
+	<td>//*[@data-svy-name='world.mybutton']/button</td>
 	<td></td>
+</tr>
+
+<tr>
+	<td>waitForText</td>
+	<td>//*[@data-svy-name='world.mylabel']/div/div/span[2]</td>
+	<td>world!</td>
+	<td>5</td>
 </tr>
 <tr>
 	<td>verifyText</td>

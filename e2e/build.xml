@@ -64,7 +64,7 @@
 
   <!-- RUNNING TASKS -->
 
-  <target name="run_all_tests" depends="run_protractor_tests, run_selenium_tests" />
+  <target name="run_all_tests" depends=" run_selenium_tests" />
 
 	<!-- use this target for jenkins and saucelabs .  It does not require selenium webdiver which is 44 mb -->
 	<target name="run_protractor_tests" depends="install_protractor_if_necessary">
@@ -83,18 +83,21 @@
 		</exec>
 	</target>
 
-  <target name="run_selenium_tests" depends="get_selenese_tests_cmd">
+	<target name="runOneInstance" depends="get_selenese_tests_cmd">
+		<for param="cmdline" list="${selenese.cmds}" delimiter=",">
+				<sequential>
+						<echo message= "@{cmdline}"/>
+						<antcall target="run_selenese">
+								<param name="selenese.cmdline" value="@{cmdline}"/>
+						</antcall>
+				</sequential>
+		 </for>
+	</target>
+  <target name="run_selenium_tests" >
     <echo message="Run selenium scripts started"/>
     <echo message="Solution name ${solution.name}"/>
+		<foreach param="nr" parallel="true" list="1,2,3,4,5" maxThreads="100" delimiter="," target="runOneInstance"></foreach>
 
-    <for param="cmdline" list="${selenese.cmds}" delimiter=",">
-        <sequential>
-            <echo message= "@{cmdline}"/>
-            <antcall target="run_selenese">
-                <param name="selenese.cmdline" value="@{cmdline}"/>
-            </antcall>
-        </sequential>
-     </for>
   </target>
 
   <!-- run selenese-runner from commandline -->
