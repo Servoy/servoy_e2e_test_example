@@ -137,11 +137,11 @@ exports.config = {
   onPrepare: function() {
     // At this point, global 'protractor' object will be set up, and jasmine
     // will be available. For example, you can add a Jasmine reporter with:
-    //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
+    //     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter(
     //         'outputdir/', true, true));
-	  require('jasmine-reporters');
+	  var jasmineReporters = require('jasmine-reporters');
 	  jasmine.getEnv().addReporter(
-		new jasmine.JUnitXmlReporter('./testResults', true, true));
+		new jasmineReporters.JUnitXmlReporter('./testResults', true, true));
   },
 
   // A callback function called once tests are finished.
