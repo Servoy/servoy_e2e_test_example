@@ -4,13 +4,13 @@
 
 1. Install JDK 1.8.x. http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
-2. 'Jenkins' https://jenkins-ci.org/
+2. 'Jenkins' https://jenkins-ci.org/; please install it to a dir that has no spaces in it's full path.
   - git plugin (probably already installed by default) https://wiki.jenkins-ci.org/display/JENKINS/Git+Plugin
   - ant plugin (probably already installed by default) https://wiki.jenkins-ci.org/display/JENKINS/Ant+Plugin
   - Sauce OnDemand plugin https://wiki.jenkins-ci.org/display/JENKINS/Sauce+OnDemand+Plugin (you also need a sauce account https://saucelabs.com/ & a generated access key/token for that account)
 
 3. 'npm' command available in path - a nodejs install https://nodejs.org/ will bring npm with it
-4. 'ant' plugin has to have an ant install configured (in Manage Jenkins - System Configuration section you can for example 'add' and check 'auto install')
+4. 'ant' plugin has to have an ant install configured (in Manage Jenkins - System Configuration - Ant section you can for example 'add' and check 'auto install')
 5. 'Servoy 8' full install, will be used to export solutions to war files
 
 ### Description

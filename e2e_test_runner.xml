@@ -39,11 +39,11 @@
 		<property file="test_runner.properties"/>
 	</target>
 
-	<target name="export_war_solutions" depends="load_properties, clean">
+	<target name="export_war_solutions" depends="load_properties, clean_exports">
 		<export-solutions-as-war solutionNames="${solutions_to_export_as_war_tests}" outputDir="${servoy.test.target-exports.war}"/>
 	</target>
 
-	<target name="run_e2e_tests" depends="load_properties, clean">
+	<target name="run_e2e_tests" depends="load_properties, clean_test_results">
 		<copy file="${e2etests.dir}/protractor.config.js.template" toFile="${e2etests.dir}/protractor.config.js" overwrite="true">
 			<filterset>
 				<filter token="{sauceUserPlaceholder}"                   value="${sauceUserPlaceholder}"/>
@@ -139,9 +139,11 @@
         	        CATALINA_OPTS = ${environment_v.CATALINA_OPTS} (before running Tomcat).
         	</echo>
             <property name="absoluteServoyUserHome" location="${e2etests.servoy_user_home.dir}" />
-        	<echo level="info" message="Using SERVOY_USER_HOME as ${absoluteServoyUserHome}"></echo>
+        	<echo level="info" message="Using as SERVOY_USER_HOME: ${absoluteServoyUserHome}"></echo>
 
 			<property name="absolute.tomcat" location="${e2e.tomcat.dir}"/>
+        	<echo level="info" message="Using tomcat installed at: ${absolute.tomcat}"></echo>
+			
 			<exec dir="${e2e.tomcat.dir}/bin" executable="sh" osfamily="unix" newenvironment="true">
 				<env key="JAVA_HOME" value="${java_home_tomcat}"/>
 				<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
@@ -162,6 +164,8 @@
 		<sequential>
 			<echo level="info" message="Stopping Tomcat"/>
 			<property name="absolute.tomcat" location="${e2e.tomcat.dir}"/>
+        	<echo level="info" message="Using tomcat installed at: ${absolute.tomcat}"></echo>
+			
 			<exec dir="${e2e.tomcat.dir}/bin" executable="sh" osfamily="unix">
 				<env key="JAVA_HOME" value="${java_home_tomcat}"/>
 				<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
@@ -246,18 +250,22 @@
 		</sequential>
 	</macrodef>
 
-	<target name="clean">
-		<!-- clean exports -->
+	<target name="clean_exports">
 		<echo level="verbose">
             *** Cleaning exports ***
         </echo>
+		<make-clean-dir dir="${log.dir}" />
 		<make-clean-dir dir="${servoy.test.target-exports.war}" />
 		<delete file="servoy_log.txt" quiet="true"/>
 		<!-- exporter produces this -->
 		<!-- also delete the workspace log file -->
 		<delete failonerror="false" file="${test.workspace.dir}/.metadata/.log" quiet="true"/>
+	</target>
 
-		<!-- clean test results -->
+	<target name="clean_test_results">
+		<echo level="verbose">
+            *** Cleaning test results ***
+        </echo>
 		<make-clean-dir dir="${log.dir}" />
 		<delete includeemptydirs="true" failonerror="no">
 			<fileset file="junit*.properties"/>
