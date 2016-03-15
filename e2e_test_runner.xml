@@ -155,7 +155,7 @@
 				<arg line="start"/>
 			</exec>
 			<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows">
-				<arg line="startup.bat"/>
+				<arg line="/C startup.bat"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -179,7 +179,7 @@
 				<!-- force -KILL if it still didn't close -->
 			</exec>
 			<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows">
-				<arg line="shutdown.bat"/>
+				<arg line="/C shutdown.bat"/>
 			</exec>
 		</sequential>
 	</macrodef>
