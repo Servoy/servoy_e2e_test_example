@@ -190,8 +190,6 @@
 			
 			<echo level="info" message="Tomcat stopped; waiting for 2 seconds."/>
 			<sleep seconds="2"/>
-		    	</else>
-		    </if>
 		</sequential>
 	</macrodef>
 
