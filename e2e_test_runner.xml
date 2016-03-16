@@ -154,8 +154,14 @@
 				<arg line="catalina.sh"/>
 				<arg line="start"/>
 			</exec>
-			<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows" failonerror="true">
-				<arg line="/C startup.bat"/>
+			<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows" newenvironment="true" failonerror="true">
+				<env key="JAVA_HOME" value="${java_home_tomcat}"/>
+				<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
+				<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
+				<env key="CATALINA_OPTS" value="-Xmx2g -XX:MaxPermSize=512m -Xms512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"/>
+				<env key="JAVA_OPTS" value="-DSERVOY_USER_HOME=${absoluteServoyUserHome}"/><!-- this will make war deployments write their log files in results dir / .servoy / ... -->
+				<env key="CATALINA_PID" value="${absolute.tomcat}/tomcat8.pid"/>
+				<arg line="/C catalina.bat start"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -183,8 +189,12 @@
 						<arg line="-force"/>
 						<!-- force -KILL if it still didn't close -->
 					</exec>
-					<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows" failonerror="true">
-						<arg line="/C shutdown.bat"/>
+					<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows" newenvironment="true" failonerror="true">
+						<env key="JAVA_HOME" value="${java_home_tomcat}"/>
+						<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
+						<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
+						<env key="CATALINA_PID" value="${absolute.tomcat}/tomcat8.pid"/>
+						<arg line="/C catalina.bat stop 9 -force"/>
 					</exec>
 					
 					<echo level="info" message="Tomcat stopped; waiting for 2 seconds."/>
