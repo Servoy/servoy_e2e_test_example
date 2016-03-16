@@ -150,7 +150,6 @@
 				<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
 				<env key="CATALINA_OPTS" value="-Xmx2g -XX:MaxPermSize=512m -Xms512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"/>
 				<env key="JAVA_OPTS" value="-DSERVOY_USER_HOME=${absoluteServoyUserHome}"/><!-- this will make war deployments write their log files in results dir / .servoy / ... -->
-				<env key="CATALINA_PID" value="${absolute.tomcat}/tomcat8.pid"/>
 				<arg line="catalina.sh"/>
 				<arg line="start"/>
 			</exec>
@@ -160,7 +159,6 @@
 				<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
 				<env key="CATALINA_OPTS" value="-Xmx2g -XX:MaxPermSize=512m -Xms512m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -XX:+CMSPermGenSweepingEnabled"/>
 				<env key="JAVA_OPTS" value="-DSERVOY_USER_HOME=${absoluteServoyUserHome}"/><!-- this will make war deployments write their log files in results dir / .servoy / ... -->
-				<env key="CATALINA_PID" value="${absolute.tomcat}/tomcat8.pid"/>
 				<arg line="/C catalina.bat start"/>
 			</exec>
 		</sequential>
@@ -172,36 +170,26 @@
 			<property name="absolute.tomcat" location="${e2e.tomcat.dir}"/>
         	<echo level="info" message="Using tomcat installed at: ${absolute.tomcat}"></echo>
 			
-		    <var name="tomcat.started" unset="true"/>
-		    <available file="${e2e.tomcat.dir}/tomcat8.pid" property="tomcat.started"/>
-		    <if>
-		        <isset property="tomcat.started" />
-		        <then>
-					<exec dir="${e2e.tomcat.dir}/bin" executable="sh" osfamily="unix" failonerror="true">
-						<env key="JAVA_HOME" value="${java_home_tomcat}"/>
-						<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
-						<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
-						<env key="CATALINA_PID" value="${absolute.tomcat}/tomcat8.pid"/>
-						<arg line="catalina.sh"/>
-						<arg line="stop"/>
-						<arg line="9"/>
-						<!-- wait for it to close timeout in seconds larger then default 5 -->
-						<arg line="-force"/>
-						<!-- force -KILL if it still didn't close -->
-					</exec>
-					<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows" newenvironment="true" failonerror="true">
-						<env key="JAVA_HOME" value="${java_home_tomcat}"/>
-						<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
-						<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
-						<env key="CATALINA_PID" value="${absolute.tomcat}/tomcat8.pid"/>
-						<arg line="/C catalina.bat stop 9 -force"/>
-					</exec>
-					
-					<echo level="info" message="Tomcat stopped; waiting for 2 seconds."/>
-					<sleep seconds="2"/>
-		        </then>
-		    	<else>
-		    		<echo level="info" message="Tomcat was not already started (tomcat8.pid file not found). Nothing to do."></echo>
+			<exec dir="${e2e.tomcat.dir}/bin" executable="sh" osfamily="unix" failonerror="true">
+				<env key="JAVA_HOME" value="${java_home_tomcat}"/>
+				<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
+				<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
+				<arg line="catalina.sh"/>
+				<arg line="stop"/>
+				<arg line="9"/>
+				<!-- wait for it to close timeout in seconds larger then default 5 -->
+				<arg line="-force"/>
+				<!-- force -KILL if it still didn't close -->
+			</exec>
+			<exec dir="${e2e.tomcat.dir}/bin" executable="cmd" osfamily="windows" newenvironment="true" failonerror="true">
+				<env key="JAVA_HOME" value="${java_home_tomcat}"/>
+				<env key="CATALINA_BASE" value="${absolute.tomcat}"/>
+				<env key="CATALINA_HOME" value="${absolute.tomcat}"/>
+				<arg line="/C catalina.bat stop 9 -force"/>
+			</exec>
+			
+			<echo level="info" message="Tomcat stopped; waiting for 2 seconds."/>
+			<sleep seconds="2"/>
 		    	</else>
 		    </if>
 		</sequential>
