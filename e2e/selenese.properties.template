@@ -1,0 +1,7 @@
+# configuration file format.
+driver: remote
+set-speed: 3000
+xml-result: testResults
+remote-platform: Windows 10
+remote-url: http://@{sauceUserPlaceholder}@:@{sauceKeyPlaceholder}@@ondemand.saucelabs.com/wd/hub/
+baseurl: http://localhost:8083

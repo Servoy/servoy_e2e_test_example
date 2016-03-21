@@ -87,36 +87,37 @@ exports.config = {
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   // Additionally, you may specify count, shardTestFiles, and maxInstances.
 
-  multiCapabilities: [{
-		browserName: 'firefox',
-		// Number of times to run this set of capabilities (in parallel, unless
-		// limited by maxSessions). Default is 1.
-		//count: 1,
-
-		// If this is set to be true, specs will be sharded by file (i.e. all
-		// files to be run by this set of capabilities will run in parallel).
-		// Default is false.
-		//shardTestFiles: false,
-		// Maximum number of browser instances that can run in parallel for this
-		// set of capabilities. This is only needed if shardTestFiles is true.
-		// Default is 1.
-		//maxInstances: 1
-	}, {
-		browserName: 'chrome',
-		//count: 1,
-		//shardTestFiles: false,
-		//maxInstances: 1
-	}, {
-		browserName: 'internet explorer',
-      //  platform: 'ANY',
-      //  version: '11',
-	//	count: 1,
-		//shardTestFiles: false,
-	//	maxInstances: 1
-	}],
+  // This is an example; the actual declaration of multiCapabilities is lower
+  //  multiCapabilities: [{
+  //		browserName: 'firefox',
+  //		// Number of times to run this set of capabilities (in parallel, unless
+  //		// limited by maxSessions). Default is 1.
+  //		//count: 1,
+  //
+  //		// If this is set to be true, specs will be sharded by file (i.e. all
+  //		// files to be run by this set of capabilities will run in parallel).
+  //		// Default is false.
+  //		//shardTestFiles: false,
+  //		// Maximum number of browser instances that can run in parallel for this
+  //		// set of capabilities. This is only needed if shardTestFiles is true.
+  //		// Default is 1.
+  //		//maxInstances: 1
+  //	}, {
+  //		browserName: 'chrome',
+  //		//count: 1,
+  //		//shardTestFiles: false,
+  //		//maxInstances: 1
+  //	}, {
+  //		browserName: 'internet explorer',
+  //     //  platform: 'ANY',
+  //      //  version: '11',
+  //	//	count: 1,
+  //		//shardTestFiles: false,
+  //	//	maxInstances: 1
+  //	}],
 
   // If you would like to run more than one instance of webdriver on the same
-  // tests, use multiCapabilities, which takes an array of capabilities.
+  // tests, use multiCapabilities, which takes an array of capabilities. See example above
   // If this is specified, capabilities will be ignored.
   multiCapabilities: [],
 
@@ -139,9 +140,26 @@ exports.config = {
     // will be available. For example, you can add a Jasmine reporter with:
     //     jasmine.getEnv().addReporter(new jasmineReporters.JUnitXmlReporter(
     //         'outputdir/', true, true));
-	  var jasmineReporters = require('jasmine-reporters');
-	  jasmine.getEnv().addReporter(
-		new jasmineReporters.JUnitXmlReporter('./testResults', true, true));
+	
+	var jasmineReporters = require('jasmine-reporters');
+    // returning the promise makes protractor wait for the reporter config before executing tests
+    return browser.getProcessedConfig().then(function(config) {
+        // you could use other properties here if you want, such as platform and version
+        var browserName = config.capabilities.browserName;
+
+        var junitReporter = new jasmineReporters.JUnitXmlReporter({
+			consolidateAll: true,
+			savePath: './testResults',
+            // this will produce distinct xml files for each capability
+            filePrefix: browserName + '-junitresults',
+            modifySuiteName: function(generatedSuiteName, suite) {
+                // this will produce distinct suite names for each capability,
+                // e.g. 'firefox.login tests' and 'chrome.login tests'
+                return browserName + '.' + generatedSuiteName;
+            }
+        });
+        jasmine.getEnv().addReporter(junitReporter);
+    });
   },
 
   // A callback function called once tests are finished.

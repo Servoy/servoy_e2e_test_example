@@ -225,7 +225,7 @@
 			<condition value="false" property="isWindows">
 		 		<os family="unix"/>
 			</condition>
-			<echo message="Running on Windows ? ${isWindows}"/>
+			<echo message="Running on Windows: ${isWindows}"/>
 	</target>
 
 </project>

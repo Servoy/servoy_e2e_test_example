@@ -61,6 +61,8 @@ Note: The values for the ant properties are provided as an example, they should 
 6. Add a 'Publish JUnit test result report' post build action and fill in 'Test report XMLs' with
 e2e/testResults/*.xml
 
-7. Optionally add a 'Run Sauce Labs Test Publisher' post build action.
+7. Add an 'Archive the artifacts' post build action. Fill in 'Files to archive' with logs/*.txt. That will make Jenkins remember for each build the exporter log files as well as the actual war app. server log file. These files can be seen on the "Status" page of the job execution.
 
-*This configuration can be changed in e2e/servoyConfigurator.js. To changed other protractor (http://www.protractortest.org/#/) settings see file e2e/protractor.config.js.template. It is currently a template because before each run the ant script injects the sauce labs credentials specified as ant properties. To change selenese-runner settings, that are used for running selenim test, see files e2e/selenese.config.json and e2e/selenese.properties
+8. Optionally add a 'Run Sauce Labs Test Publisher' post build action.
+
+*This configuration can be changed in e2e/servoyConfigurator.js. To change other protractor (http://www.protractortest.org/#/) settings see file e2e/protractor.config.js.template. It is currently a template because before each run the ant script injects the sauce labs credentials specified as ant properties. To change selenese-runner settings (https://github.com/vmi/selenese-runner-java), that are used for running selenim test, see files e2e/selenese.config.json and e2e/selenese.properties.template.

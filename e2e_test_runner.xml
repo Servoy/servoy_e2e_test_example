@@ -33,18 +33,32 @@
 	<taskdef name="deploy"    classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant-classpath"/>
 	<taskdef name="undeploy"  classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant-classpath"/>
 
-	<target name="run_war_solution_tests" depends="export_war_solutions, prepare_export_log, run_e2e_tests"/>
+	<target name="run_war_solution_tests" depends="load_properties, clean_test_results, clean_exports, export_war_solutions, run_e2e_tests"/>
 	
 	<target name="load_properties">
 		<property file="test_runner.properties"/>
 	</target>
 
 	<target name="export_war_solutions" depends="load_properties, clean_exports">
-		<export-solutions-as-war solutionNames="${solutions_to_export_as_war_tests}" outputDir="${servoy.test.target-exports.war}"/>
+		<trycatch>
+			<try>
+				<export-solutions-as-war solutionNames="${solutions_to_export_as_war_tests}" outputDir="${servoy.test.target-exports.war}"/>
+			</try>
+			<finally>
+				<antcall target="prepare_export_log" />
+			</finally>
+		</trycatch>
 	</target>
 
 	<target name="run_e2e_tests" depends="load_properties, clean_test_results">
 		<copy file="${e2etests.dir}/protractor.config.js.template" toFile="${e2etests.dir}/protractor.config.js" overwrite="true">
+			<filterset>
+				<filter token="{sauceUserPlaceholder}"                   value="${sauceUserPlaceholder}"/>
+				<filter token="{sauceKeyPlaceholder}"                    value="${sauceKeyPlaceholder}"/>
+			</filterset>
+		</copy>
+
+		<copy file="${e2etests.dir}/selenese.properties.template" toFile="${e2etests.dir}/selenese.properties" overwrite="true">
 			<filterset>
 				<filter token="{sauceUserPlaceholder}"                   value="${sauceUserPlaceholder}"/>
 				<filter token="{sauceKeyPlaceholder}"                    value="${sauceKeyPlaceholder}"/>
@@ -97,18 +111,31 @@
 										
 										<!-- now append this war's app server log file to the others to have nice logs -->
 										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true"/>
-										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true" message="------------------------------- Starting to test @{solutionName} -------------------------------"></echo>
+										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true" message="------------------------------- Starting to test @{solution.name} -------------------------------"></echo>
 										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true"/>
-										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true"/>
-										<concat destfile="${log.dir}/war_test_run_logs_concatted.txt" append="true">
-											<filelist dir="${e2etests.servoy_user_home.dir}/.servoy/server/@{solutionName}" files="servoy_log.txt"/>
-										</concat>
-										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true"/>
-										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true" message="------------------------------- Finished testing @{solutionName} -------------------------------"></echo>
 										<echo file="${log.dir}/war_test_run_logs_concatted.txt" append="true"/>
 
-										<!-- Rename junit results file so that it doesn't get overwritten by any following solution -->
-										<move file="${e2etests.results.dir}/junitresults.xml" tofile="${e2etests.results.dir}/junitresults_@{solution.name}.xml"/>
+										<echo file="${e2etests.servoy_user_home.dir}/.servoy/server/@{solution.name}/servoy_log.txt" append="true"/>
+										<echo file="${e2etests.servoy_user_home.dir}/.servoy/server/@{solution.name}/servoy_log.txt" append="true" message="------------------------------- Finished testing @{solution.name} -------------------------------"></echo>
+										<echo file="${e2etests.servoy_user_home.dir}/.servoy/server/@{solution.name}/servoy_log.txt" append="true"/>
+										
+										<concat destfile="${log.dir}/war_test_run_logs_concatted.txt" append="true">
+											<filelist dir="${e2etests.servoy_user_home.dir}/.servoy/server/@{solution.name}" files="servoy_log.txt"/>
+										</concat>
+
+										<!-- Rename junit results file(s) (can be multiple is multi capability is used) so that it doesn't get overwritten by any following solution -->
+										<move todir="${e2etests.results.dir}" includeemptydirs="false">
+										    <fileset dir="${e2etests.results.dir}">
+												<include name="*junitresults.xml"/>
+										    </fileset>
+											<mapper type="glob" from="*-junitresults.xml" to="protractor_*_@{solution.name}.xml"/>
+										</move>
+										<move todir="${e2etests.results.dir}" includeemptydirs="false">
+										    <fileset dir="${e2etests.results.dir}">
+											    <include name="TEST-*.xml"/>
+										    </fileset>
+											<mapper type="glob" from="TEST-*.xml" to="selenese_*_@{solution.name}.xml"/>
+										</move>
 
 										<echo level="info" message="Sleeping for 10 more seconds to fix another problem that sometimes appeared with deploy/undeploy..."/>
 										<sleep seconds="10"/>
@@ -194,7 +221,7 @@
 	</macrodef>
 
 	<target name="prepare_export_log">
-		<move file="servoy_log.txt" tofile="${log.dir}/workspace_exporter_app_server_log.txt" failonerror="false"/>
+		<move file="${servoy_install.app_server_dir}/servoy_log.txt" tofile="${log.dir}/workspace_exporter_app_server_log.txt" failonerror="false"/>
 		<move file="${test.workspace.dir}/.metadata/.log" tofile="${log.dir}/workspace_exporter_workspace_log.txt" failonerror="false"/>
 	</target>
 
@@ -265,7 +292,7 @@
         </echo>
 		<make-clean-dir dir="${log.dir}" />
 		<make-clean-dir dir="${servoy.test.target-exports.war}" />
-		<delete file="servoy_log.txt" quiet="true"/>
+		<delete file="${servoy_install.app_server_dir}/servoy_log.txt" quiet="true"/>
 		<!-- exporter produces this -->
 		<!-- also delete the workspace log file -->
 		<delete failonerror="false" file="${test.workspace.dir}/.metadata/.log" quiet="true"/>
