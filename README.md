@@ -1,4 +1,4 @@
-## End to end testing of Servoy solutions example running on Sauce Labs.
+## End to end testing example for Servoy solutions - running on Sauce Labs.
 
 ### Prerequisites
 
@@ -31,7 +31,7 @@ Tests should then be added in the folder `e2e/spec/mySolution/` and `e2e/seleniu
 
 
 
-### Setup
+### Setup (Jenkins/Sauce)
 
 1. In "Manage Jenkins -> Configure" add a JDK and point it to the one you just installed (uncheck 'install automatically')
 
@@ -55,15 +55,15 @@ Sauce Connect Options: --vm-version dev-varnish
 ```
 	Note: The values for the ant properties are provided as an example, they should be customised to match your instalation and Sauce Labs account. You should use slash instead of backslash even when running on windows
 
-6. Add a 'Publish JUnit test result report' post build action and fill in 'Test report XMLs' with e2e/testResults/\*.xml
+6. Add a 'Publish JUnit test result report' post build action and fill in 'Test report XMLs' with `e2e/testResults/*.xml`
 
-7. Add an 'Archive the artifacts' post build action. Fill in 'Files to archive' with logs/\*.txt. That will make Jenkins remember for each build the exporter log files as well as the actual war app. server log file. These files can be seen on the "Status" page of the job execution
+7. Add an 'Archive the artifacts' post build action. Fill in 'Files to archive' with `logs/*.txt`. That will make Jenkins remember for each build the exporter log files as well as the actual war app. server log file. These files can be seen on the "Status" page of the job execution
 
 8. Optionally add a 'Run Sauce Labs Test Publisher' post build action.
 
 *This configuration can be changed in e2e/servoyConfigurator.js. To change other protractor (http://www.protractortest.org/#/) settings see file e2e/protractor.config.js.template. It is currently a template because before each run the ant script injects the sauce labs credentials specified as ant properties. To change selenese-runner settings (https://github.com/vmi/selenese-runner-java), that are used for running selenim test, see files e2e/selenese.config.json and e2e/selenese.properties.template.*
 
-### Running the e2e tests locally
+### Running the e2e tests locally (when developing)
 
 Here is how you can run the tests locally using Chrome installed on Windows (you can do it in a similar way for other OSes/browsers by tweaking the protractor/selenese-runner settings accordingly).
 
