@@ -66,3 +66,28 @@ e2e/testResults/*.xml
 8. Optionally add a 'Run Sauce Labs Test Publisher' post build action.
 
 *This configuration can be changed in e2e/servoyConfigurator.js. To change other protractor (http://www.protractortest.org/#/) settings see file e2e/protractor.config.js.template. It is currently a template because before each run the ant script injects the sauce labs credentials specified as ant properties. To change selenese-runner settings (https://github.com/vmi/selenese-runner-java), that are used for running selenim test, see files e2e/selenese.config.json and e2e/selenese.properties.template.
+
+### Running the e2e tests locally
+
+Here is how you can run the tests locally using Chrome installed on Windows (you can do it in a similar way for other OSes/browsers by tweaking the protractor/selenese-runner settings accordingly).
+
+1. Clone the git repository locally.
+2. Create a copy of the file "local_test_runner.properties.template" named "local_test_runner.properties". In it set all the properties that the ant build needs as defined in Jenkins Setup step 5 above.
+3. In package.json add the following two dependencies (below protractor and jasmine-reporters; you should be able to use the latest available versions instead of he two above):
+	"selenium-server": "2.52.0",
+	"chromedriver": "2.21.2"
+4. In protractor.config.js.template
+	- comment out lines with "sauceUser" and "sauceKey".
+	- change the following lines to this (adjust the version number of seleniumServerJar if needed to match the one you set in step 3):
+			chromeDriver: './node_modules/chromedriver/lib/chromedriver/chromedriver.exe',
+			seleniumServerJar: './node_modules/selenium-server/lib/runner/selenium-server-standalone-2.52.0.jar',
+			multiCapabilities: [{ browserName: 'chrome' }],
+5. In selenese.properties.template
+	- remove the "remote-..." lines (2 of them)
+	- change the following line to this:
+			driver: chrome
+	- add one line:
+			chromedriver: node_modules/chromedriver/lib/chromedriver/chromedriver.exe 
+6. Run the ant script (target 'run_war_solution_tests' or, if you didn't change the solutions, just the test scripts 'run_e2e_tests').
+Assuming ant is installed and available in path run 'ant -f e2e_test_runner.xml' or 'ant -f e2e_test_runner.xml run_e2e_tests'
+

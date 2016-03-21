@@ -36,6 +36,7 @@
 	<target name="run_war_solution_tests" depends="load_properties, clean_test_results, clean_exports, export_war_solutions, run_e2e_tests"/>
 	
 	<target name="load_properties">
+		<property file="local_test_runner.properties"/> <!-- this file is not available when running in Jenkins setup, only when running tests locally -->
 		<property file="test_runner.properties"/>
 	</target>
 
