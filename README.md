@@ -1,3 +1,18 @@
+# Deprecated
+
+This repository is deprecated. It has been integrated as an end-to-end testing step in https://wiki.servoy.com/display/DOCS/Servoy+Software+Factory+Example+using+Jenkins.
+
+The new repositories that also show off end-to-end testing (used by the above wiki page) are:
+
+https://github.com/Servoy/software_factory_build_scripts
+
+https://github.com/Servoy/software_factory_sample_solutions
+
+https://github.com/Servoy/software_factory_build_tools
+
+
+__________________________________________________________________________________________________
+
 ## End to end testing example for Servoy solutions - running on Sauce Labs.
 
 ### Prerequisites
